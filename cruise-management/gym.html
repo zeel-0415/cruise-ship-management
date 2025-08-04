@@ -1,0 +1,60 @@
+<!-- gym.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Gym Session</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>🏋️ Fitness Center</h2>
+    <form id="gymForm">
+      <label>Workout Type:
+        <input type="text" id="workout" required placeholder="Cardio, Strength, etc." />
+      </label>
+
+      <label>Time Slot:
+        <input type="time" id="time" required />
+      </label>
+
+      <button type="submit">✅ Book</button>
+      <button type="button" onclick="goBack()">🔙 Back</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { db, auth } from "./firebase/firebase-config.js";
+    import { ref, push } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+
+    let userEmail = null;
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) userEmail = user.email;
+      else window.location.href = "index.html";
+    });
+
+    document.getElementById("gymForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const workout = document.getElementById("workout").value;
+      const time = document.getElementById("time").value;
+
+      await push(ref(db, "voyager-orders/gym"), {
+        email: userEmail,
+        workout,
+        time,
+        timestamp: new Date().toISOString()
+      });
+
+      Toastify({ text: "Gym Session Booked!", duration: 3000, gravity: "top", backgroundColor: "#28a745" }).showToast();
+      e.target.reset();
+    });
+
+    function goBack() {
+      window.location.href = "voyager-dashboard.html";
+    }
+  </script>
+</body>
+</html>

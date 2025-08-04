@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Head-Cook Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      padding: 30px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      justify-items: center;
+      margin-bottom: 30px;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: background 0.3s, transform 0.2s;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #218838;
+      transform: translateY(-2px);
+    }
+
+    .action-row {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .icon {
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>👨‍🍳 Welcome, <strong>Head-Cook</strong></h1>
+
+  <div class="dashboard">
+    <button onclick="viewCookingTasks()"><i class="fas fa-utensils icon"></i>View Cooking Tasks</button>
+    <button onclick="requestInventory()"><i class="fas fa-clipboard-list icon"></i>Request Inventory</button>
+    <button onclick="viewInventoryStatus()"><i class="fas fa-boxes icon"></i>View Inventory Status</button>
+    <button onclick="viewMealPlans()"><i class="fas fa-calendar-alt icon"></i>View Meal Plans</button>
+    <button onclick="exportLogs()"><i class="fas fa-file-export icon"></i>Export Logs</button>
+    <button onclick="changePassword()"><i class="fas fa-key icon"></i>Change Password</button>
+  </div>
+
+  <div class="action-row">
+    <button onclick="goBack()"><i class="fas fa-arrow-left icon"></i>Back</button>
+    <button onclick="logout()"><i class="fas fa-sign-out-alt icon"></i>Logout</button>
+  </div>
+
+  <script type="module" src="js/headcook.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Dashboard</title>
+  <script type="module" src="js/admin.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #333;
+    }
+    button {
+      padding: 8px 14px;
+      margin: 10px 5px;
+      border: none;
+      background-color: #444;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #333;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background: #333;
+      color: white;
+    }
+    select {
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>👨‍✈️ Admin Dashboard</h2>
+  <button onclick="window.history.back()">🔙 Back</button>
+  <button id="logoutBtn">🚪 Logout</button>
+
+  <div class="card">
+    <h3>📊 Dashboard Stats</h3>
+    <p>Total Users: <span id="totalUsers">0</span></p>
+  </div>
+
+  <div class="card">
+    <h3>👥 Registered Users</h3>
+    <table>
+      <thead>
+        <tr><th>Email</th><th>Role</th><th>Update Role</th><th>Actions</th></tr>
+      </thead>
+      <tbody id="usersTableBody"></tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <h3>🧾 User Logs (Audit Trail)</h3>
+    <ul id="logList"></ul>
+    <button id="exportBtn">📤 Export Logs CSV</button>
+  </div>
+</body>
+</html>

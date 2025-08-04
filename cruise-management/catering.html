@@ -1,0 +1,95 @@
+<!-- catering.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Catering Order - Voyager</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>🍽 Catering Order</h2>
+    <form id="cateringForm">
+      <label>Meal Type:
+        <select id="mealType" required>
+          <option value="">--Select--</option>
+          <option value="Breakfast">Breakfast</option>
+          <option value="Lunch">Lunch</option>
+          <option value="Dinner">Dinner</option>
+          <option value="Snacks">Snacks</option>
+        </select>
+      </label>
+
+      <label>Quantity:
+        <input type="number" id="quantity" min="1" max="20" required />
+      </label>
+
+      <label>Special Request:
+        <textarea id="notes" placeholder="Any allergies or custom request?"></textarea>
+      </label>
+
+      <button type="submit">✅ Place Order</button>
+      <button type="button" onclick="goBack()">🔙 Back</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { db, auth } from "./firebase/firebase-config.js";
+    import { ref, push } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+
+    let userEmail = null;
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        userEmail = user.email;
+      } else {
+        alert("Please login first.");
+        window.location.href = "index.html";
+      }
+    });
+
+    document.getElementById("cateringForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const meal = document.getElementById("mealType").value;
+      const qty = document.getElementById("quantity").value;
+      const notes = document.getElementById("notes").value;
+
+      if (!userEmail) return;
+
+      const orderData = {
+        email: userEmail,
+        meal,
+        qty,
+        notes,
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        await push(ref(db, "voyager-orders/catering"), orderData);
+        Toastify({
+          text: "Order placed successfully!",
+          duration: 3000,
+          gravity: "top",
+          backgroundColor: "#28a745"
+        }).showToast();
+        document.getElementById("cateringForm").reset();
+      } catch (err) {
+        console.error(err);
+        Toastify({
+          text: "❌ Failed to place order",
+          duration: 3000,
+          gravity: "top",
+          backgroundColor: "#dc3545"
+        }).showToast();
+      }
+    });
+
+    function goBack() {
+      window.location.href = "voyager-dashboard.html";
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!-- salon.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Salon Booking</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>💇‍♂️ Salon Booking</h2>
+    <form id="salonForm">
+      <label>Service Type:
+        <input type="text" id="service" required placeholder="Haircut, Facial, etc." />
+      </label>
+
+      <label>Date:
+        <input type="date" id="date" required />
+      </label>
+
+      <button type="submit">✅ Book Now</button>
+      <button type="button" onclick="goBack()">🔙 Back</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { db, auth } from "./firebase/firebase-config.js";
+    import { ref, push } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+
+    let userEmail = null;
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) userEmail = user.email;
+      else window.location.href = "index.html";
+    });
+
+    document.getElementById("salonForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const service = document.getElementById("service").value;
+      const date = document.getElementById("date").value;
+
+      await push(ref(db, "voyager-orders/salon"), {
+        email: userEmail,
+        service,
+        date,
+        timestamp: new Date().toISOString()
+      });
+
+      Toastify({ text: "Salon Appointment Booked!", duration: 3000, gravity: "top", backgroundColor: "#28a745" }).showToast();
+      e.target.reset();
+    });
+
+    function goBack() {
+      window.location.href = "voyager-dashboard.html";
+    }
+  </script>
+</body>
+</html>

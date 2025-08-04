@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Voyager Dashboard</title>
+  <script type="module" src="js/voyager.js" defer></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f8ff;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .card button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 15px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .card button:hover {
+      background-color: #0056b3;
+    }
+
+    #logoutBtn {
+      margin-top: 40px;
+      display: block;
+      margin-inline: auto;
+      background-color: #dc3545;
+    }
+
+    #logoutBtn:hover {
+      background-color: #a72b38;
+    }
+  </style>
+</head>
+<body>
+  <h2>🚢 Welcome Voyager!</h2>
+  <div class="card-container">
+    <div class="card">
+      <h3>🍽️ Catering</h3>
+      <button id="orderCateringBtn">Order Food</button>
+    </div>
+    <div class="card">
+      <h3>🖊️ Stationery</h3>
+      <button id="orderStationeryBtn">Order Items</button>
+    </div>
+    <div class="card">
+      <h3>🎟️ Resort-Movie</h3>
+      <button id="bookMovieBtn">Book Tickets</button>
+    </div>
+    <div class="card">
+      <h3>💇 Beauty Salon</h3>
+      <button id="bookSalonBtn">Book Salon</button>
+    </div>
+    <div class="card">
+      <h3>🏋️ Fitness Center</h3>
+      <button id="bookGymBtn">Book Session</button>
+    </div>
+    <div class="card">
+      <h3>🪩 Party Hall</h3>
+      <button id="bookPartyBtn">Book Hall</button>
+    </div>
+  </div>
+
+  <button id="logoutBtn">Logout</button>
+</body>
+</html>

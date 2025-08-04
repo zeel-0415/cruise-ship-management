@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stationery Order</title>
+  <script type="module" src="js/stationery.js" defer></script>
+  <style>
+    body {
+      font-family: Arial;
+      background: #e6f9f2;
+      padding: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2e8b57;
+    }
+
+    form {
+      max-width: 400px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    input, select, button {
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #2e8b57;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #216c45;
+    }
+  </style>
+</head>
+<body>
+  <h2>🖊️ Stationery Order</h2>
+  <form id="stationeryForm">
+    <input type="text" id="itemName" placeholder="Item Name" required />
+    <input type="number" id="quantity" placeholder="Quantity" min="1" required />
+    <button type="submit">Place Order</button>
+  </form>
+</body>
+</html>

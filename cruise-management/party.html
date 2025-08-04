@@ -1,0 +1,60 @@
+<!-- party.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Party Hall Booking</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+<body>
+  <div class="container">
+    <h2>🎉 Party Hall Booking</h2>
+    <form id="partyForm">
+      <label>Occasion:
+        <input type="text" id="occasion" required placeholder="Birthday, Farewell, etc." />
+      </label>
+
+      <label>Date:
+        <input type="date" id="date" required />
+      </label>
+
+      <button type="submit">✅ Book</button>
+      <button type="button" onclick="goBack()">🔙 Back</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { db, auth } from "./firebase/firebase-config.js";
+    import { ref, push } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-database.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+
+    let userEmail = null;
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) userEmail = user.email;
+      else window.location.href = "index.html";
+    });
+
+    document.getElementById("partyForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const occasion = document.getElementById("occasion").value;
+      const date = document.getElementById("date").value;
+
+      await push(ref(db, "voyager-orders/party"), {
+        email: userEmail,
+        occasion,
+        date,
+        timestamp: new Date().toISOString()
+      });
+
+      Toastify({ text: "Party Hall Booked!", duration: 3000, gravity: "top", backgroundColor: "#28a745" }).showToast();
+      e.target.reset();
+    });
+
+    function goBack() {
+      window.location.href = "voyager-dashboard.html";
+    }
+  </script>
+</body>
+</html>
